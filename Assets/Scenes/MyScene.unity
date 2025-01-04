@@ -540,6 +540,50 @@ Rigidbody:
   m_CorrespondingSourceObject: {fileID: 5772849930776200815, guid: 72138a47ec7b8714c91aa39dcdf3b714, type: 3}
   m_PrefabInstance: {fileID: 459174898}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &170343187
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 170343189}
+  - component: {fileID: 170343188}
+  m_Layer: 0
+  m_Name: ExamplePlayerObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &170343188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170343187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d139bfacebbf80845abf275c990ea334, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &170343189
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170343187}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &459174898
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2398,10 +2442,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5429412401311655958, guid: a8f5320a616d3994bbcfea86bb28d917, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 2864391218910978855, guid: a8f5320a616d3994bbcfea86bb28d917, type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4425963979647964901, guid: a8f5320a616d3994bbcfea86bb28d917, type: 3}
+      propertyPath: playerStats
+      value: 
+      objectReference: {fileID: 170343188}
     - target: {fileID: 7401840201312686143, guid: a8f5320a616d3994bbcfea86bb28d917, type: 3}
       propertyPath: m_Name
       value: InformationBox
@@ -2472,3 +2520,4 @@ SceneRoots:
   - {fileID: 5092822292529661658}
   - {fileID: 532388594}
   - {fileID: 1979237819}
+  - {fileID: 170343189}
