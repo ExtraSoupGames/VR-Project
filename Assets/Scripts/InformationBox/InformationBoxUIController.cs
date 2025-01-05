@@ -4,7 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-internal class Question
+public class Question
 {
     public int correctAnswer;
     public string questionString;
@@ -17,8 +17,13 @@ internal class Question
 
 public class InformationBoxUIController : MonoBehaviour
 {
+    enum ScreenState
+    {
+        Information,
+        Question,
+        Success
+    }
     public bool showingUI;
-    public Image background;
     public TextMeshProUGUI infoText;
     public Button backButton;
     public Button forwardButton;
@@ -27,37 +32,45 @@ public class InformationBoxUIController : MonoBehaviour
     public Button answer3Button;
     private Question question = new Question( 1, "What is the question?");
     private string information = "This is the information";
-    private int screenNum = 1;
+    private ScreenState state;
     public PlayerStats playerStats;
+    private void Start()
+    {
+        UpdateShowingUI();
+    }
     private void Update()
     {
+        if (!showingUI)
+        {
+            return;
+        }
+        switch (state)
+        {
+            case ScreenState.Information:
+                infoText.text = information;
+                answer1Button.interactable = false;
+                answer2Button.interactable = false;
+                answer3Button.interactable = false;
+                backButton.interactable = false;
+                forwardButton.interactable = true;
+                break;
+            case ScreenState.Question:
+                infoText.text = question.questionString;
+                answer1Button.interactable = true;
+                answer2Button.interactable = true;
+                answer3Button.interactable = true;
+                backButton.interactable = true;
+                forwardButton.interactable = false;
+                break;
+            case ScreenState.Success:
+                infoText.text = "Correct!";
+                answer1Button.interactable = false;
+                answer2Button.interactable = false;
+                answer3Button.interactable = false;
+                backButton.interactable = false;
+                forwardButton.interactable = false;
+                break;
 
-        if(screenNum == 1)
-        {
-            infoText.text = information;
-            answer1Button.interactable = false;
-            answer2Button.interactable = false;
-            answer3Button.interactable = false;
-            backButton.interactable = false;
-            forwardButton.interactable = true;
-        }
-        else if (screenNum == 2)
-        {
-            infoText.text = question.questionString;
-            answer1Button.interactable = true;
-            answer2Button.interactable = true;
-            answer3Button.interactable = true;
-            backButton.interactable = true;
-            forwardButton.interactable = false;
-        }
-        else
-        {
-            infoText.text = "Correct!";
-            answer1Button.interactable = false;
-            answer2Button.interactable = false;
-            answer3Button.interactable = false;
-            backButton.interactable = false;
-            forwardButton.interactable = false;
         }
     }
     public void ToggleUI()
@@ -67,7 +80,6 @@ public class InformationBoxUIController : MonoBehaviour
     }
     private void UpdateShowingUI()
     {
-        background.gameObject.SetActive(showingUI);
         infoText.gameObject.SetActive(showingUI);
         backButton.gameObject.SetActive(showingUI);
         forwardButton.gameObject.SetActive(showingUI);
@@ -89,7 +101,7 @@ public class InformationBoxUIController : MonoBehaviour
     private void CorrectAnswer()
     {
         playerStats.AddInformationPellets(5);
-        screenNum = 3;
+        state = ScreenState.Success;
         
     }
     private void IncorrectAnswer()
@@ -98,10 +110,10 @@ public class InformationBoxUIController : MonoBehaviour
     }
     public void ForwardButtonPressed()
     {
-        screenNum++;
+        state++;
     }
     public void BackButtonPressed()
     {
-        screenNum--;
+        state--;
     }
 }
