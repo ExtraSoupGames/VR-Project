@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-internal class Planet
+public class Planet
 {
     public int x;
     public int y;
-    int pelletsRequired;
+    public int pelletsRequired;
     Color color;
+
+    //in future this will also store the data required to generate the planet once the player travels there...
     public Planet(int x, int y, int pelletsRequired, Color color)
     {
         this.x = x;
@@ -32,17 +34,18 @@ public class PlanetSelector : MonoBehaviour
     List<Planet> planets;
     List<GameObject> planetDisplay;
     public GameObject planetDisplayPrefab;
-    Planet selectedPLanet;
+    Planet selectedPlanet;
     public TextMeshProUGUI selectedPlanetDisplayText;
     public GameObject selectedPlanetArea;
+    public PlayerStats playerStats;
     private GameObject selectedPlanetDisplay;
     // Start is called before the first frame update
     void Start()
     {
         planets = new List<Planet> { 
-        new Planet(3, 4, 5, new Color(0, 0, 1)),
-        new Planet(-3, -4, 10, new Color(0, 1, 0)),
-        new Planet(8, -6, 15, new Color(1, 0, 0))};
+        new Planet(3, 4, 0, new Color(0, 0, 1)),
+        new Planet(-3, -4, 5, new Color(0, 1, 0)),
+        new Planet(8, -6, 10, new Color(1, 0, 0))};
         planetDisplay = new List<GameObject>();
         foreach(Planet p in planets){
             GameObject newPlanetDisplay = Instantiate(planetDisplayPrefab, this.transform);
@@ -50,7 +53,7 @@ public class PlanetSelector : MonoBehaviour
             newPlanetDisplay.transform.localPosition = new Vector3(p.x, p.y, 0);
             newPlanetDisplay.GetComponent<MeshRenderer>().material.color = p.GetColor();
         }
-        selectedPLanet = null;
+        selectedPlanet = null;
     }
 
     // Update is called once per frame
@@ -73,23 +76,42 @@ public class PlanetSelector : MonoBehaviour
     }
     public void SelectPlanetPressed()
     {
-        selectedPLanet = null;
+        selectedPlanet = null;
         selectedPlanetDisplayText.text = "No Planet Selected";
         Destroy(selectedPlanetDisplay);
         foreach(Planet p in planets)
         {
             if (p.x == targetX && p.y == targetY)
             {
-                selectedPLanet = p;
+                selectedPlanet = p;
             }
         }
-        if(selectedPLanet == null)
+        if(selectedPlanet == null)
         {
             return;
         }
-        selectedPlanetDisplayText.text = "Selected Planet!";
         selectedPlanetDisplay = Instantiate(planetDisplayPrefab, selectedPlanetArea.transform);
-        selectedPlanetDisplay.GetComponent<MeshRenderer>().material.color = selectedPLanet.GetColor();
+        selectedPlanetDisplay.GetComponent<MeshRenderer>().material.color = selectedPlanet.GetColor();
         selectedPlanetDisplay.transform.localPosition = new Vector3(0, 3, 0);
+        if (selectedPlanet.pelletsRequired <= playerStats.GetInformationPellets())
+        {
+            selectedPlanetDisplayText.text = "Selected Planet!";
+        }
+        else
+        {
+            selectedPlanetDisplayText.text = "Planet locket! not enough information pellets";
+
+        }
+    }
+    public Planet GetSelectedPlanet() // called by the airlock when spawning in world, returning null means the airlock does not open
+    {
+        if(selectedPlanet.pelletsRequired <= playerStats.GetInformationPellets())
+        {
+            return selectedPlanet;
+        }
+        else
+        {
+            return null;
+        }
     }
 }

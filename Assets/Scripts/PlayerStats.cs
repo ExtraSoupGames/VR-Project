@@ -20,4 +20,8 @@ public class PlayerStats : MonoBehaviour
     {
         informationPellets += numToAdd;
     }
+    public int GetInformationPellets()
+    {
+        return informationPellets;
+    }
 }

@@ -2215,6 +2215,7 @@ MonoBehaviour:
   planetDisplayPrefab: {fileID: 1633348511428299300, guid: a3e72a5f1c3ab8040accb3f53f18bc64, type: 3}
   selectedPlanetDisplayText: {fileID: 1500626060}
   selectedPlanetArea: {fileID: 1726043923}
+  playerStats: {fileID: 170343188}
 --- !u!1 &1500626058
 GameObject:
   m_ObjectHideFlags: 0
@@ -2272,7 +2273,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: NEW TEXT
+  m_text: Press to select planet!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
