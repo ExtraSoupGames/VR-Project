@@ -1,3 +1,4 @@
+using Palmmedia.ReportGenerator.Core;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,9 @@ public class AirlockController : MonoBehaviour
     private int innerDoorClosedX;
     private int innerDoorOpenX;
     private float movementSpeed;
+
+    public TerrainGenerator terrainGenerator;
+    public HeightMapSettings heightMapSettings;
     enum AirlockState
     {
         OpenInside,
@@ -18,6 +22,7 @@ public class AirlockController : MonoBehaviour
         Closed
     }
     AirlockState state;
+    bool renderingOutside;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +32,7 @@ public class AirlockController : MonoBehaviour
         innerDoorOpenX = 5;
         movementSpeed = 3f;
         state = AirlockState.Closed;
+        renderingOutside = false;
     }
 
     // Update is called once per frame
@@ -77,6 +83,15 @@ public class AirlockController : MonoBehaviour
                 {
                     CloseOuterDoor();
                 }
+                else
+                {
+                    //if the outer door is closed already, then we can stop rendering the outside
+                    if (renderingOutside)
+                    {
+                        renderingOutside = false;
+                        DestroyTerrain();
+                    }
+                }
                 break;
         }
     }
@@ -120,6 +135,8 @@ public class AirlockController : MonoBehaviour
         if(state == AirlockState.Closed)
         {
             state = AirlockState.OpenOutside;
+            GenerateTerrain();
+            renderingOutside = true;
         }
     }
     public void CloseOuterDoorPressed() 
@@ -128,5 +145,14 @@ public class AirlockController : MonoBehaviour
         {
             state = AirlockState.Closed;
         }
+    }
+    public void GenerateTerrain()
+    {
+        terrainGenerator.heightMapSettings = heightMapSettings;
+        terrainGenerator.CreateTerrain();
+    }
+    public void DestroyTerrain()
+    {
+        terrainGenerator.DestroyTerrain();
     }
 }

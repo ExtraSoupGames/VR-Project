@@ -1,5 +1,6 @@
 ﻿﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 
 public class TerrainGenerator : MonoBehaviour {
 
@@ -30,21 +31,18 @@ public class TerrainGenerator : MonoBehaviour {
     Dictionary<Vector2, TerrainChunk> terrainChunkDictionary = new Dictionary<Vector2, TerrainChunk>();
     List<TerrainChunk> visibleTerrainChunks = new List<TerrainChunk>();
 
+    // Bool to track if rendering is required right now
+    bool rendering;
+
     void Start() {
-        // Apply texture settings to the material and update mesh height information
-        textureSettings.ApplyToMaterial(mapMaterial);
-        textureSettings.UpdateMeshHeights(mapMaterial, heightMapSettings.minHeight, heightMapSettings.maxHeight);
-
-        // Calculate the maximum visible distance and the number of chunks that fit within the view distance
-        float maxViewDst = detailLevels[detailLevels.Length - 1].visibleDstThreshold;
-        meshWorldSize = meshSettings.meshWorldSize;
-        chunksVisibleInViewDst = Mathf.RoundToInt(maxViewDst / meshWorldSize);
-
-        // Initialize the visible chunks based on the viewer's initial position
-        UpdateVisibleChunks();
+        rendering = false;
     }
 
     void Update() {
+        if (!rendering)
+        {
+            return;
+        }
         // Update the viewer's current position (ignoring the y-axis)
         viewerPosition = new Vector2(viewer.position.x, viewer.position.z);
 
@@ -64,6 +62,10 @@ public class TerrainGenerator : MonoBehaviour {
 
     // Updates the visible terrain chunks based on the current viewer position
     void UpdateVisibleChunks() {
+        if (!rendering)
+        {
+            return;
+        }
         HashSet<Vector2> alreadyUpdatedChunkCoords = new HashSet<Vector2>();
 
         // Update each visible chunk in the current view
@@ -107,6 +109,32 @@ public class TerrainGenerator : MonoBehaviour {
             // Remove chunk from the visible list when it becomes invisible
             visibleTerrainChunks.Remove(chunk);
         }
+    }
+
+    //Disable function called when airlock is closed
+    public void DestroyTerrain()
+    {
+        rendering = false;
+        foreach(TerrainChunk chunk in terrainChunkDictionary.Values)
+        {
+            chunk.SetVisible(false);
+        }
+    }
+    //Enable function called when airlock is opened
+    public void CreateTerrain()
+    {
+        rendering = true;
+        // Apply texture settings to the material and update mesh height information
+        textureSettings.ApplyToMaterial(mapMaterial);
+        textureSettings.UpdateMeshHeights(mapMaterial, heightMapSettings.minHeight, heightMapSettings.maxHeight);
+
+        // Calculate the maximum visible distance and the number of chunks that fit within the view distance
+        float maxViewDst = detailLevels[detailLevels.Length - 1].visibleDstThreshold;
+        meshWorldSize = meshSettings.meshWorldSize;
+        chunksVisibleInViewDst = Mathf.RoundToInt(maxViewDst / meshWorldSize);
+
+        // Initialize the visible chunks based on the viewer's initial position
+        UpdateVisibleChunks();
     }
 }
 
