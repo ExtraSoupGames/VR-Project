@@ -1,52 +1,67 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Threading;
 
 public class ThreadedDataRequester : MonoBehaviour {
 
-	static ThreadedDataRequester instance;
-	Queue<ThreadInfo> dataQueue = new Queue<ThreadInfo>();
+    // Singleton instance of ThreadedDataRequester
+    static ThreadedDataRequester instance;
+    
+    // Queue to hold thread information for later processing in the main thread
+    Queue<ThreadInfo> dataQueue = new Queue<ThreadInfo>();
 
-	void Awake() {
-		instance = FindObjectOfType<ThreadedDataRequester> ();
-	}
+    // Called when the script is initialized, used for setting up the singleton instance
+    void Awake() {
+        instance = FindObjectOfType<ThreadedDataRequester>();
+    }
 
-	public static void RequestData(Func<object> generateData, Action<object> callback) {
-		ThreadStart threadStart = delegate {
-			instance.DataThread (generateData, callback);
-		};
+    // Static method to request data in a separate thread and execute a callback when done
+    public static void RequestData(Func<object> generateData, Action<object> callback) {
+        // Create a ThreadStart delegate to handle the thread execution
+        ThreadStart threadStart = delegate {
+            // Run the DataThread method on a new thread
+            instance.DataThread(generateData, callback);
+        };
 
-		new Thread (threadStart).Start ();
-	}
+        // Start the new thread
+        new Thread(threadStart).Start();
+    }
 
-	void DataThread(Func<object> generateData, Action<object> callback) {
-		object data = generateData ();
-		lock (dataQueue) {
-			dataQueue.Enqueue (new ThreadInfo (callback, data));
-		}
-	}
-		
+    // Method executed on a separate thread to generate the requested data and enqueue it for the main thread
+    void DataThread(Func<object> generateData, Action<object> callback) {
+        // Generate the data using the provided delegate
+        object data = generateData();
+        
+        // Lock the data queue to ensure thread-safe access
+        lock (dataQueue) {
+            // Enqueue the callback and the generated data as a new ThreadInfo
+            dataQueue.Enqueue(new ThreadInfo(callback, data));
+        }
+    }
 
-	void Update() {
-		if (dataQueue.Count > 0) {
-			for (int i = 0; i < dataQueue.Count; i++) {
-				ThreadInfo threadInfo = dataQueue.Dequeue ();
-				threadInfo.callback (threadInfo.parameter);
-			}
-		}
-	}
+    // Update is called once per frame. It processes the data queue and invokes the callbacks on the main thread
+    void Update() {
+        // Check if there is any data to process in the queue
+        if (dataQueue.Count > 0) {
+            // Process all items in the queue
+            for (int i = 0; i < dataQueue.Count; i++) {
+                // Dequeue the next thread info and execute the callback
+                ThreadInfo threadInfo = dataQueue.Dequeue();
+                threadInfo.callback(threadInfo.parameter);
+            }
+        }
+    }
 
-	struct ThreadInfo {
-		public readonly Action<object> callback;
-		public readonly object parameter;
+    // Struct to hold the callback and the data to pass to the callback
+    struct ThreadInfo {
+        public readonly Action<object> callback;  // Callback to be executed with the data
+        public readonly object parameter;         // Data to pass to the callback
 
-		public ThreadInfo (Action<object> callback, object parameter)
-		{
-			this.callback = callback;
-			this.parameter = parameter;
-		}
-
-	}
+        // Constructor for initializing ThreadInfo with a callback and parameter
+        public ThreadInfo(Action<object> callback, object parameter) {
+            this.callback = callback;
+            this.parameter = parameter;
+        }
+    }
 }
