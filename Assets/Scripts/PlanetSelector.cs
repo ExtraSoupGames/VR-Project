@@ -3,21 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.Assertions.Must;
+[Serializable]
 public class PlanetSelection
 {
     public int x;
     public int y;
     public int pelletsRequired;
-    Color color;
+    public Color color;
+    public HeightMapSettings heightMapSettings;
+    public MeshSettings mesh;
+    public TextureData textures;
 
     //in future this will also store the data required to generate the planet once the player travels there...
-    public PlanetSelection(int x, int y, int pelletsRequired, Color color)
+    public PlanetSelection(int x, int y, int pelletsRequired, Color color, HeightMapSettings heightMap, MeshSettings mesh, TextureData textures)
     {
         this.x = x;
         this.y = y;
         this.pelletsRequired = pelletsRequired;
         this.color = color;
+        this.heightMapSettings = heightMap;
+        this.mesh = mesh;
+        this.textures = textures;
     }
     public Color GetColor()
     {
@@ -31,7 +38,7 @@ public class PlanetSelector : MonoBehaviour
     public GameObject xPointer;
     public GameObject yPointer;
     public GameObject finalPointer;
-    List<PlanetSelection> planets;
+    public List<PlanetSelection> planets;
     List<GameObject> planetDisplay;
     public GameObject planetDisplayPrefab;
     PlanetSelection selectedPlanet;
@@ -39,13 +46,11 @@ public class PlanetSelector : MonoBehaviour
     public GameObject selectedPlanetArea;
     public PlayerStats playerStats;
     private GameObject selectedPlanetDisplay;
+
+    //Planet Values
     // Start is called before the first frame update
     void Start()
     {
-        planets = new List<PlanetSelection> { 
-        new PlanetSelection(3, 4, 0, new Color(0, 0, 1)),
-        new PlanetSelection(-3, -4, 5, new Color(0, 1, 0)),
-        new PlanetSelection(8, -6, 10, new Color(1, 0, 0))};
         planetDisplay = new List<GameObject>();
         foreach(PlanetSelection p in planets){
             GameObject newPlanetDisplay = Instantiate(planetDisplayPrefab, this.transform);

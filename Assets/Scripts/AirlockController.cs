@@ -14,7 +14,8 @@ public class AirlockController : MonoBehaviour
     private float movementSpeed;
 
     public TerrainGenerator terrainGenerator;
-    public HeightMapSettings heightMapSettings;
+    public PlanetSelector planetSelector;
+    public PlayerStats playerStats;
     enum AirlockState
     {
         OpenInside,
@@ -132,6 +133,11 @@ public class AirlockController : MonoBehaviour
     }
     public void OpenOuterDoorPressed()
     {
+        if(planetSelector.GetSelectedPlanet() == null)
+        {
+            //maybe some visual feedback if player doesnt have enough pellets
+            return;
+        }
         if(state == AirlockState.Closed)
         {
             state = AirlockState.OpenOutside;
@@ -148,7 +154,10 @@ public class AirlockController : MonoBehaviour
     }
     public void GenerateTerrain()
     {
-        terrainGenerator.heightMapSettings = heightMapSettings;
+        PlanetSelection p = planetSelector.GetSelectedPlanet();
+        terrainGenerator.heightMapSettings = p.heightMapSettings;
+        terrainGenerator.meshSettings = p.mesh;
+        terrainGenerator.textureSettings = p.textures;
         terrainGenerator.CreateTerrain();
     }
     public void DestroyTerrain()

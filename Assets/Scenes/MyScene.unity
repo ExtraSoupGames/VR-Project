@@ -923,6 +923,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outerDoor: {fileID: 1192895807}
   innerDoor: {fileID: 860605147}
+  terrainGenerator: {fileID: 0}
+  planetSelector: {fileID: 0}
+  playerStats: {fileID: 0}
 --- !u!4 &318653261
 Transform:
   m_ObjectHideFlags: 0
@@ -2974,17 +2977,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1317205607}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1330021186 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1494584084725523256, guid: a8f5320a616d3994bbcfea86bb28d917, type: 3}
-  m_PrefabInstance: {fileID: 5092822292529661658}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1336310902
 GameObject:
   m_ObjectHideFlags: 0
@@ -3315,6 +3307,7 @@ MonoBehaviour:
   xPointer: {fileID: 1614921891}
   yPointer: {fileID: 1574227198}
   finalPointer: {fileID: 305473151}
+  planets: []
   planetDisplayPrefab: {fileID: 1633348511428299300, guid: a3e72a5f1c3ab8040accb3f53f18bc64, type: 3}
   selectedPlanetDisplayText: {fileID: 1500626060}
   selectedPlanetArea: {fileID: 1726043923}
@@ -5125,17 +5118,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fad94b617f0540568dbf4c9c4011248c, type: 3}
---- !u!114 &1995524195 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4046182050033398876, guid: a8f5320a616d3994bbcfea86bb28d917, type: 3}
-  m_PrefabInstance: {fileID: 5092822292529661658}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!20 &2022949585 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 7277802327414017196, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
@@ -5273,38 +5255,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 949493216}
     m_Modifications:
-    - target: {fileID: 248797012954211187, guid: a8f5320a616d3994bbcfea86bb28d917, type: 3}
-      propertyPath: m_TargetGraphic
-      value: 
-      objectReference: {fileID: 1330021186}
-    - target: {fileID: 409982263643439378, guid: a8f5320a616d3994bbcfea86bb28d917, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2864391218910978855, guid: a8f5320a616d3994bbcfea86bb28d917, type: 3}
-      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3675942939652200367, guid: a8f5320a616d3994bbcfea86bb28d917, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4425963979647964901, guid: a8f5320a616d3994bbcfea86bb28d917, type: 3}
-      propertyPath: background
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 4425963979647964901, guid: a8f5320a616d3994bbcfea86bb28d917, type: 3}
       propertyPath: playerStats
       value: 
       objectReference: {fileID: 170343188}
-    - target: {fileID: 5282477973842267286, guid: a8f5320a616d3994bbcfea86bb28d917, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5630610223044063085, guid: a8f5320a616d3994bbcfea86bb28d917, type: 3}
-      propertyPath: m_TargetGraphic
-      value: 
-      objectReference: {fileID: 1995524195}
     - target: {fileID: 7401840201312686143, guid: a8f5320a616d3994bbcfea86bb28d917, type: 3}
       propertyPath: m_Name
       value: InformationBox
@@ -5348,18 +5302,6 @@ PrefabInstance:
     - target: {fileID: 7477301134150198007, guid: a8f5320a616d3994bbcfea86bb28d917, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7572008605596616634, guid: a8f5320a616d3994bbcfea86bb28d917, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7652632438753766383, guid: a8f5320a616d3994bbcfea86bb28d917, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8508914848769890180, guid: a8f5320a616d3994bbcfea86bb28d917, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8627073877408680834, guid: a8f5320a616d3994bbcfea86bb28d917, type: 3}
       propertyPath: m_Camera

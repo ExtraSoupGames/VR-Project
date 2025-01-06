@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using Unity.VRTemplate;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 public class TerrainChunk {
 
