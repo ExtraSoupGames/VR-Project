@@ -46,6 +46,7 @@ public class TerrainChunk {
     // Settings for heightmap and mesh.
     HeightMapSettings heightMapSettings;
     MeshSettings meshSettings;
+    ChunkDeleter chunkDeleter;
     // Transform representing the viewer (e.g., the player).
     Transform viewer;
 
@@ -69,6 +70,7 @@ public class TerrainChunk {
         meshRenderer = chunkObject.AddComponent<MeshRenderer>();
         meshFilter = chunkObject.AddComponent<MeshFilter>();
         meshCollider = chunkObject.AddComponent<MeshCollider>();
+        chunkDeleter = chunkObject.AddComponent<ChunkDeleter>();
         meshRenderer.material = material;
 
         // Set the chunk position and parent.
@@ -89,6 +91,11 @@ public class TerrainChunk {
 
         // Set the maximum view distance based on the last detail level.
         maxViewDst = detailLevels[detailLevels.Length - 1].visibleDstThreshold;
+    }
+
+    public void Delete()
+    {
+        chunkDeleter.DeleteMe();
     }
 
     // Requests the heightmap data asynchronously and triggers the update once it's received.

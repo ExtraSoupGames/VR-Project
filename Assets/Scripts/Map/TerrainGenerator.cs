@@ -117,9 +117,10 @@ public class TerrainGenerator : MonoBehaviour {
         rendering = false;
         foreach(TerrainChunk chunk in terrainChunkDictionary.Values)
         {
-            //TODO delete old chunks
+            chunk.Delete();
         }
         terrainChunkDictionary = new Dictionary<Vector2, TerrainChunk>();
+        visibleTerrainChunks = new List<TerrainChunk>();
     }
     //Enable function called when airlock is opened
     public void CreateTerrain()
