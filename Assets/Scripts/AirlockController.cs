@@ -12,6 +12,8 @@ public class AirlockController : MonoBehaviour
     private int innerDoorClosedX;
     private int innerDoorOpenX;
     private float movementSpeed;
+    public GameObject SpaceshipExterior;
+    public GameObject SpaceShipInterior;
 
     public TerrainGenerator terrainGenerator;
     public PlanetSelector planetSelector;
@@ -67,7 +69,7 @@ public class AirlockController : MonoBehaviour
                     }
                     else
                     {
-                        //done
+                        outerDoor.SetActive(false);
                     }
                 }
                 else
@@ -91,6 +93,8 @@ public class AirlockController : MonoBehaviour
                     {
                         renderingOutside = false;
                         DestroyTerrain();
+                        SpaceShipInterior.SetActive(true);
+                        SpaceshipExterior.SetActive(false);
                     }
                 }
                 break;
@@ -113,6 +117,7 @@ public class AirlockController : MonoBehaviour
     }
     private void CloseOuterDoor()
     {
+        outerDoor.SetActive(true);
         float difference = outerDoorClosedX - outerDoor.transform.localPosition.x;
         outerDoor.transform.localPosition += new Vector3(Mathf.Clamp(difference, -movementSpeed * Time.deltaTime, movementSpeed * Time.deltaTime), 0, 0);
 
@@ -143,6 +148,8 @@ public class AirlockController : MonoBehaviour
             state = AirlockState.OpenOutside;
             GenerateTerrain();
             renderingOutside = true;
+            SpaceShipInterior.SetActive(false);
+            SpaceshipExterior.SetActive(true);
         }
     }
     public void CloseOuterDoorPressed() 
