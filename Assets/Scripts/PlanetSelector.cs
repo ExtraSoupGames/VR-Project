@@ -41,6 +41,7 @@ public class PlanetSelector : MonoBehaviour
     public List<PlanetSelection> planets;
     List<GameObject> planetDisplay;
     public GameObject planetDisplayPrefab;
+    public Planet planetDisplayStand;
     PlanetSelection selectedPlanet;
     public TextMeshProUGUI selectedPlanetDisplayText;
     public GameObject selectedPlanetArea;
@@ -95,9 +96,7 @@ public class PlanetSelector : MonoBehaviour
         {
             return;
         }
-        selectedPlanetDisplay = Instantiate(planetDisplayPrefab, selectedPlanetArea.transform);
-        selectedPlanetDisplay.GetComponent<MeshRenderer>().material.color = selectedPlanet.GetColor();
-        selectedPlanetDisplay.transform.localPosition = new Vector3(0, 3, 0);
+        planetDisplayStand.GeneratePlanet();//TODO LINK DISPLAY VALUES
         if (selectedPlanet.pelletsRequired <= playerStats.GetInformationPellets())
         {
             selectedPlanetDisplayText.text = "Selected Planet!";
