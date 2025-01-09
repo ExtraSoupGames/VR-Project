@@ -80,11 +80,8 @@ public class Planet : MonoBehaviour
     public void GeneratePlanet()
     {
         Initialize();      // Initialize all the necessary components
-        Debug.Log("Planet values initialized");
         GenerateMesh();    // Generate the planet's mesh
-        Debug.Log("Planet mesh generated");
         GenerateColours(); // Generate the planet's colours/texture
-        Debug.Log("Planet colours generated");
     }
 
     // Called when the shape settings are updated. It regenerates the mesh if autoUpdate is enabled

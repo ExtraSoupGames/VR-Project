@@ -8,10 +8,12 @@ public class Question
 {
     public int correctAnswer;
     public string questionString;
-    public Question(int correctAnswer, string questionString)
+    public string informationString;
+    public Question(int correctAnswer, string questionString, string informationString)
     {
         this.correctAnswer = correctAnswer;
         this.questionString = questionString;
+        this.informationString = informationString;
     }
 }
 
@@ -25,17 +27,17 @@ public class InformationBoxUIController : MonoBehaviour
     }
     public bool showingUI;
     public TextMeshProUGUI infoText;
-    public Button backButton;
-    public Button forwardButton;
-    public Button answer1Button;
-    public Button answer2Button;
-    public Button answer3Button;
-    private Question question = new Question( 1, "What is the question?");
-    private string information = "This is the information";
+    public GameObject backButton;
+    public GameObject forwardButton;
+    public GameObject answer1Button;
+    public GameObject answer2Button;
+    public GameObject answer3Button;
+    private Question question;
     private ScreenState state;
     public PlayerStats playerStats;
     private void Start()
     {
+        question = QuestionGetter.GetQuestion();
         UpdateShowingUI();
     }
     private void Update()
@@ -47,28 +49,28 @@ public class InformationBoxUIController : MonoBehaviour
         switch (state)
         {
             case ScreenState.Information:
-                infoText.text = information;
-                answer1Button.interactable = false;
-                answer2Button.interactable = false;
-                answer3Button.interactable = false;
-                backButton.interactable = false;
-                forwardButton.interactable = true;
+                infoText.text = question.informationString;
+                answer1Button.SetActive(false);
+                answer2Button.SetActive(false);
+                answer3Button.SetActive(false);
+                backButton.SetActive(false);
+                forwardButton.SetActive(true);
                 break;
             case ScreenState.Question:
                 infoText.text = question.questionString;
-                answer1Button.interactable = true;
-                answer2Button.interactable = true;
-                answer3Button.interactable = true;
-                backButton.interactable = true;
-                forwardButton.interactable = false;
+                answer1Button.SetActive(true);
+                answer2Button.SetActive(true);
+                answer3Button.SetActive(true);
+                backButton.SetActive(true);
+                forwardButton.SetActive(false);
                 break;
             case ScreenState.Success:
                 infoText.text = "Correct!";
-                answer1Button.interactable = false;
-                answer2Button.interactable = false;
-                answer3Button.interactable = false;
-                backButton.interactable = false;
-                forwardButton.interactable = false;
+                answer1Button.SetActive(false);
+                answer2Button.SetActive(false);
+                answer3Button.SetActive(false);
+                backButton.SetActive(false);
+                forwardButton.SetActive(false);
                 break;
 
         }
