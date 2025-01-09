@@ -136,4 +136,18 @@ public class Planet : MonoBehaviour
             }
         }
     }
+    public void HidePlanet()
+    {
+        foreach (MeshFilter m in meshFilters)
+        {
+            m.gameObject.SetActive(false);
+        }
+    }
+    public void ShowPlanet()
+    {
+        foreach (MeshFilter m in meshFilters)
+        {
+            m.gameObject.SetActive(true);
+        }
+    }
 }

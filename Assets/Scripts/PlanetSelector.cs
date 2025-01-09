@@ -101,8 +101,10 @@ public class PlanetSelector : MonoBehaviour
         }
         if(selectedPlanet == null)
         {
+            planetDisplayStand.HidePlanet();
             return;
         }
+        planetDisplayStand.ShowPlanet();
         planetDisplayStand.colourSettings = selectedPlanet.planetColour;
         planetDisplayStand.shapeSettings = selectedPlanet.planetShape;
         planetDisplayStand.GeneratePlanet();
