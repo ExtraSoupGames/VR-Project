@@ -11,12 +11,17 @@ public class PlanetSelection
     public int y;
     public int pelletsRequired;
     public Color color;
+    //Terrain Generator values
     public HeightMapSettings heightMapSettings;
     public MeshSettings mesh;
     public TextureData textures;
+    //Planet Generator values
+    public ColourSettings planetColour;
+    public ShapeSettings planetShape;
+
 
     //in future this will also store the data required to generate the planet once the player travels there...
-    public PlanetSelection(int x, int y, int pelletsRequired, Color color, HeightMapSettings heightMap, MeshSettings mesh, TextureData textures)
+    public PlanetSelection(int x, int y, int pelletsRequired, Color color, HeightMapSettings heightMap, MeshSettings mesh, TextureData textures, ColourSettings planetColour, ShapeSettings planetShape)
     {
         this.x = x;
         this.y = y;
@@ -25,6 +30,8 @@ public class PlanetSelection
         this.heightMapSettings = heightMap;
         this.mesh = mesh;
         this.textures = textures;
+        this.planetColour = planetColour;
+        this.planetShape = planetShape;
     }
     public Color GetColor()
     {
@@ -96,7 +103,9 @@ public class PlanetSelector : MonoBehaviour
         {
             return;
         }
-        planetDisplayStand.GeneratePlanet();//TODO LINK DISPLAY VALUES
+        planetDisplayStand.colourSettings = selectedPlanet.planetColour;
+        planetDisplayStand.shapeSettings = selectedPlanet.planetShape;
+        planetDisplayStand.GeneratePlanet();
         if (selectedPlanet.pelletsRequired <= playerStats.GetInformationPellets())
         {
             selectedPlanetDisplayText.text = "Selected Planet!";
