@@ -11,6 +11,7 @@ public class FuelRodSlotController : MonoBehaviour
     public XRSocketInteractor fuelRodSlotInteractor;
     private IXRSelectInteractable attachedObject;
     public GameObject ParticlePrefab;
+    public AudioClip FuelRodSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +31,8 @@ public class FuelRodSlotController : MonoBehaviour
         }
         XRBaseInteractable fuelRod = (XRBaseInteractable)attachedObject;
         Destroy(fuelRod.gameObject);
-        Instantiate(ParticlePrefab, this.transform.position, Quaternion.identity, this.transform.parent);
+        GameObject particles = Instantiate(ParticlePrefab, this.transform.position, Quaternion.identity, this.transform.parent);
+        particles.GetComponent<AudioSource>().clip = FuelRodSound;
         //TODO particles
         playerStats.AddFuel(100);
     }

@@ -11,7 +11,7 @@ public class PlayerStats : MonoBehaviour
     void Start()
     {
         //TODO Remove once pellets are obtainable
-        fuel = 50;
+        fuel = 300;
     }
 
     // Update is called once per frame

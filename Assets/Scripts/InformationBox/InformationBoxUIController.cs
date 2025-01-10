@@ -43,6 +43,7 @@ public class InformationBoxUIController : MonoBehaviour
     public PlayerStats playerStats;
     public GameObject FuelRodPrefab;
     public GameObject ParticlePrefab;
+    public AudioClip CorrectAnswerSound;
     private QuestionGetter questions;
     public void Initialize(Question question, PlayerStats playerStats, QuestionGetter questions)
     {
@@ -120,7 +121,8 @@ public class InformationBoxUIController : MonoBehaviour
         state = ScreenState.Success;
         questions.RemoveQuestion(question.questionString);
         Instantiate(FuelRodPrefab, this.transform.position, Quaternion.identity, this.transform.parent.parent);
-        Instantiate(ParticlePrefab, this.transform.position, Quaternion.identity, this.transform.parent.parent);
+        GameObject particles = Instantiate(ParticlePrefab, this.transform.position, Quaternion.identity, this.transform.parent.parent);
+        particles.GetComponent<AudioSource>().clip = CorrectAnswerSound;
         Destroy(this.gameObject.transform.parent.gameObject);
         
     }
