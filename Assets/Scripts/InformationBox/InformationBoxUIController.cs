@@ -42,6 +42,7 @@ public class InformationBoxUIController : MonoBehaviour
     private ScreenState state;
     public PlayerStats playerStats;
     public GameObject FuelRodPrefab;
+    public GameObject ParticlePrefab;
     private QuestionGetter questions;
     public void Initialize(Question question, PlayerStats playerStats, QuestionGetter questions)
     {
@@ -118,8 +119,9 @@ public class InformationBoxUIController : MonoBehaviour
     {
         state = ScreenState.Success;
         questions.RemoveQuestion(question.questionString);
-        Instantiate(FuelRodPrefab, this.transform.parent);
-        Destroy(this);
+        Instantiate(FuelRodPrefab, this.transform.position, Quaternion.identity, this.transform.parent.parent);
+        Instantiate(ParticlePrefab, this.transform.position, Quaternion.identity, this.transform.parent.parent);
+        Destroy(this.gameObject.transform.parent.gameObject);
         
     }
     private void IncorrectAnswer()

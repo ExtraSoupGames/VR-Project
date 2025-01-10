@@ -1283,6 +1283,7 @@ MonoBehaviour:
   answer3Button: {fileID: 9134481535187973058}
   playerStats: {fileID: 0}
   FuelRodPrefab: {fileID: 2293441585523164428, guid: 64a87098502a32b43a83f40c952ee082, type: 3}
+  ParticlePrefab: {fileID: 316228545980280360, guid: 8217c370bc44eff4e93af8ed975dee7c, type: 3}
 --- !u!1 &5779752005110753614
 GameObject:
   m_ObjectHideFlags: 0
