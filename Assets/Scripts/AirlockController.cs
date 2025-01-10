@@ -13,6 +13,9 @@ public class AirlockController : MonoBehaviour
     private float movementSpeed;
     public GameObject SpaceshipExterior;
     public GameObject SpaceShipInterior;
+    private GameObject informationBox;
+    public GameObject InformationBoxPrefab;
+    public Transform informationBoxTransform;
 
     public TerrainGenerator terrainGenerator;
     public PlanetSelector planetSelector;
@@ -94,6 +97,7 @@ public class AirlockController : MonoBehaviour
                         DestroyTerrain();
                         SpaceShipInterior.SetActive(true);
                         SpaceshipExterior.SetActive(false);
+                        Destroy(informationBox);
                     }
                 }
                 break;
@@ -165,9 +169,25 @@ public class AirlockController : MonoBehaviour
         terrainGenerator.meshSettings = p.mesh;
         terrainGenerator.textureSettings = p.textures;
         terrainGenerator.CreateTerrain();
+        if (!p.InformationBoxAnswered)
+        {
+            SpawnInformationBoxes(p.topic);
+        }
     }
     public void DestroyTerrain()
     {
         terrainGenerator.DestroyTerrain();
+    }
+    private void SpawnInformationBoxes(Topics topic)
+    {
+        List<Question> topicQuestions = playerStats.GetComponent<QuestionGetter>().GetQuestions(topic);
+        int questionCount = topicQuestions.Count;
+        int questionBoxOffset = -questionCount / 2;
+        foreach (Question question in topicQuestions)
+        {
+            questionBoxOffset += 1;
+            informationBox = Instantiate(InformationBoxPrefab, informationBoxTransform.position + (new Vector3(0, 0, questionBoxOffset)), Quaternion.identity, informationBoxTransform.transform);
+            informationBox.GetComponentInChildren<InformationBoxUIController>().Initialize(question, playerStats, playerStats.GetComponent<QuestionGetter>());
+        }
     }
 }

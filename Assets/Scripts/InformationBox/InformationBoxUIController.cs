@@ -9,11 +9,17 @@ public class Question
     public int correctAnswer;
     public string questionString;
     public string informationString;
-    public Question(int correctAnswer, string questionString, string informationString)
+    public string answer1String;
+    public string answer2String;
+    public string answer3String;
+    public Question(int correctAnswer, string questionString, string informationString, string answer1String, string answer2String, string answer3String)
     {
         this.correctAnswer = correctAnswer;
         this.questionString = questionString;
         this.informationString = informationString;
+        this.answer1String = answer1String;
+        this.answer2String = answer2String;
+        this.answer3String = answer3String;
     }
 }
 
@@ -35,10 +41,15 @@ public class InformationBoxUIController : MonoBehaviour
     private Question question;
     private ScreenState state;
     public PlayerStats playerStats;
-    private void Start()
+    public GameObject FuelRodPrefab;
+    private QuestionGetter questions;
+    public void Initialize(Question question, PlayerStats playerStats, QuestionGetter questions)
     {
-        question = QuestionGetter.GetQuestion();
+        this.playerStats = playerStats;
+        this.question = question;
+        this.questions = questions;
         UpdateShowingUI();
+
     }
     private void Update()
     {
@@ -58,8 +69,11 @@ public class InformationBoxUIController : MonoBehaviour
                 break;
             case ScreenState.Question:
                 infoText.text = question.questionString;
+                answer1Button.GetComponentInChildren<TextMeshProUGUI>().text = question.answer1String;
                 answer1Button.SetActive(true);
+                answer2Button.GetComponentInChildren<TextMeshProUGUI>().text = question.answer2String;
                 answer2Button.SetActive(true);
+                answer3Button.GetComponentInChildren<TextMeshProUGUI>().text = question.answer3String;
                 answer3Button.SetActive(true);
                 backButton.SetActive(true);
                 forwardButton.SetActive(false);
@@ -102,8 +116,10 @@ public class InformationBoxUIController : MonoBehaviour
     }
     private void CorrectAnswer()
     {
-        playerStats.AddInformationPellets(5);
         state = ScreenState.Success;
+        questions.RemoveQuestion(question.questionString);
+        Instantiate(FuelRodPrefab, this.transform.parent);
+        Destroy(this);
         
     }
     private void IncorrectAnswer()

@@ -5,26 +5,26 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    public TextMeshProUGUI pelletsText;
-    private int informationPellets;
+    public TextMeshProUGUI fuelText;
+    private int fuel;
     // Start is called before the first frame update
     void Start()
     {
         //TODO Remove once pellets are obtainable
-        informationPellets = 500;
+        fuel = 50;
     }
 
     // Update is called once per frame
     void Update()
     {
-        pelletsText.text = "Information Pellets: " + informationPellets;
+        fuelText.text = "Fuel: " + fuel;
     }
-    public void AddInformationPellets(int numToAdd)
+    public void AddFuel(int numToAdd)
     {
-        informationPellets += numToAdd;
+        fuel += numToAdd;
     }
-    public int GetInformationPellets()
+    public int GetFuel()
     {
-        return informationPellets;
+        return fuel;
     }
 }

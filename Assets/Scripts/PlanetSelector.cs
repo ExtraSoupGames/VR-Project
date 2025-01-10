@@ -9,7 +9,7 @@ public class PlanetSelection
 {
     public int x;
     public int y;
-    public int pelletsRequired;
+    public int fuelRequired;
     public Color color;
     //Terrain Generator values
     public HeightMapSettings heightMapSettings;
@@ -18,20 +18,25 @@ public class PlanetSelection
     //Planet Generator values
     public ColourSettings planetColour;
     public ShapeSettings planetShape;
+    //Planet information Box answered
+    public bool InformationBoxAnswered;
+    public Topics topic;
 
 
     //in future this will also store the data required to generate the planet once the player travels there...
-    public PlanetSelection(int x, int y, int pelletsRequired, Color color, HeightMapSettings heightMap, MeshSettings mesh, TextureData textures, ColourSettings planetColour, ShapeSettings planetShape)
+    public PlanetSelection(int x, int y, int fuelRequired, Color color, HeightMapSettings heightMap, MeshSettings mesh, TextureData textures, ColourSettings planetColour, ShapeSettings planetShape, Topics topic)
     {
         this.x = x;
         this.y = y;
-        this.pelletsRequired = pelletsRequired;
+        this.fuelRequired = fuelRequired;
         this.color = color;
         this.heightMapSettings = heightMap;
         this.mesh = mesh;
         this.textures = textures;
         this.planetColour = planetColour;
         this.planetShape = planetShape;
+        InformationBoxAnswered = false;
+        this.topic = topic;
     }
     public Color GetColor()
     {
@@ -108,7 +113,7 @@ public class PlanetSelector : MonoBehaviour
         planetDisplayStand.colourSettings = selectedPlanet.planetColour;
         planetDisplayStand.shapeSettings = selectedPlanet.planetShape;
         planetDisplayStand.GeneratePlanet();
-        if (selectedPlanet.pelletsRequired <= playerStats.GetInformationPellets())
+        if (selectedPlanet.fuelRequired <= playerStats.GetFuel())
         {
             selectedPlanetDisplayText.text = "Selected Planet!";
         }
@@ -120,7 +125,7 @@ public class PlanetSelector : MonoBehaviour
     }
     public PlanetSelection GetSelectedPlanet() // called by the airlock when spawning in world, returning null means the airlock does not open
     {
-        if(selectedPlanet.pelletsRequired <= playerStats.GetInformationPellets())
+        if(selectedPlanet.fuelRequired <= playerStats.GetFuel())
         {
             return selectedPlanet;
         }

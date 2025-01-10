@@ -1282,6 +1282,7 @@ MonoBehaviour:
   answer2Button: {fileID: 704273594434541037}
   answer3Button: {fileID: 9134481535187973058}
   playerStats: {fileID: 0}
+  FuelRodPrefab: {fileID: 2293441585523164428, guid: 64a87098502a32b43a83f40c952ee082, type: 3}
 --- !u!1 &5779752005110753614
 GameObject:
   m_ObjectHideFlags: 0
@@ -1482,8 +1483,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 100}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0, y: 200}
+  m_SizeDelta: {x: 600, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3134520416041478955
 CanvasRenderer:
@@ -1731,7 +1732,6 @@ GameObject:
   - component: {fileID: 2294626195647371138}
   - component: {fileID: 2864391218910978855}
   - component: {fileID: 8240419853934703100}
-  - component: {fileID: 3808569881473841479}
   m_Layer: 0
   m_Name: Box
   m_TagString: Untagged
@@ -1836,7 +1836,7 @@ Rigidbody:
   m_GameObject: {fileID: 8740568782979885249}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 5
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -1849,7 +1849,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
@@ -2024,18 +2024,6 @@ MonoBehaviour:
   m_MinimumScaleRatio: 0.25
   m_MaximumScaleRatio: 2
   m_ScaleMultiplier: 0.25
---- !u!114 &3808569881473841479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8740568782979885249}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fd60dbcfd2e9bb4fac444616f693081, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &9134481535187973058
 GameObject:
   m_ObjectHideFlags: 0
